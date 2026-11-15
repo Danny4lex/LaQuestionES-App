@@ -16,7 +16,7 @@
     <div class="card">
         <h1>{{ $surveyTitle }}</h1>
         <p>{{ $participantName }},</p>
-        <p>Le invitamos a participar en la siguiente encuesta institucional del Ministerio de Cultura:</p>
+        <p>Le invitamos a participar en la siguiente encuesta institucional:</p>
         @if ($surveyDescription)
             <p>{{ $surveyDescription }}</p>
         @endif

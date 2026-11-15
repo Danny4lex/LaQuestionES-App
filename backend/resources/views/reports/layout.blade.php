@@ -391,7 +391,7 @@
                     @endif
                 </td>
                 <td>
-                    <div class="kicker">Ministerio de Cultura · Sistema de Gestión de Encuestas</div>
+                    <div class="kicker">Sistema de Gestión de Encuestas</div>
                     <div class="title">@yield('heading')</div>
                     <div class="subtitle">@yield('subheading')</div>
                 </td>
@@ -406,7 +406,7 @@
     <div class="footer">
         <table>
             <tr>
-                <td>Ministerio de Cultura — Sistema de Gestión de Encuestas e Indicadores Institucionales</td>
+                <td>Sistema de Gestión de Encuestas e Indicadores Institucionales</td>
                 <td class="right">Página <span class="pagenum"></span></td>
             </tr>
         </table>

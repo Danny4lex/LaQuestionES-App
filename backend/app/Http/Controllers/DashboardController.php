@@ -13,7 +13,7 @@ class DashboardController extends Controller
     /**
      * PANTALLA: DASHBOARD GENERAL (TARJETAS DE CONTEO SUPERIORES E INDICADORES)
      * Propósito: Devuelve los KPIs unificados para pintar las tarjetas principales de la UI,
-     * las gráficas dinámicas de dona y líneas, y los ránkings históricos del Ministerio.
+     * las gráficas dinámicas de dona y líneas, y los ránkings históricos.
      * CORREGIDO DEFINITIVAMENTE: ya no compara por texto visible (name) —
      * usa la columna "slug" de statuses, estable aunque el nombre cambie.
      *

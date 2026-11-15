@@ -29,7 +29,6 @@ use App\Http\Controllers\SurveyNotificationController;
 /*
 |============================================================================
 | API — Sistema de Gestion de Encuestas e Indicadores Institucionales
-| Ministerio de Cultura — modulo construido sobre base-app-2
 |============================================================================
 |
 | GUIA PARA FRONTEND (Carlos):
