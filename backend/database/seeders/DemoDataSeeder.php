@@ -16,9 +16,9 @@ class DemoDataSeeder extends Seeder
     {
         // 1. Obtener IDs de catálogos (usamos DB para evitar problemas con SoftDeletes)
         $adminRoleId   = DB::table('survey_roles')->where('name', 'Administrador')->value('id');
-        $mainDeptId    = DB::table('organizational_units')->where('code', 'DM')->value('id');
+        $mainDeptId    = DB::table('organizational_units')->where('code', 'DG')->value('id');
         $statusBorradorId  = DB::table('statuses')->where('name', 'like', '%Borrador%')->value('id');
-        $statusPublicadaId = DB::table('statuses')->where('name', 'like', '%Publicada%')->value('id');
+        $statusPublicadaId = DB::table('statuses')->where('name', 'like', '%Activa%')->value('id');
         $statusCerradaId   = DB::table('statuses')->where('name', 'like', '%Cerrada%')->value('id');
         $tipoPublicaId = DB::table('types')->where('name', 'Pública')->value('id');
         $tipoPrivadaId = DB::table('types')->where('name', 'Privada')->value('id');
@@ -28,10 +28,10 @@ class DemoDataSeeder extends Seeder
 
         // 2. Usuario administrador
         $admin = \App\Models\SurveyUser::firstOrCreate(
-            ['email' => 'admin@cultura.gob.sv'],
+            ['email' => 'admin@laquestiones.test'],
             [
                 'external_id'   => 'ext-001',
-                'name'          => 'Carlos Méndez',
+                'name'          => 'Administrador Demo',
                 'is_active'     => true,
                 'role_id'       => $adminRoleId,
                 'dependency_id' => $mainDeptId,

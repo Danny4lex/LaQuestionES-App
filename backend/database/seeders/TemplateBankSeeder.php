@@ -82,7 +82,7 @@ class TemplateBankSeeder extends Seeder
         return [
             [
                 'name' => 'Evaluación de eventos culturales',
-                'description' => 'Mide la satisfacción y experiencia de los asistentes a un evento, exposición o actividad cultural del Ministerio.',
+                'description' => 'Mide la satisfacción y experiencia de los asistentes a un evento, exposición o actividad organizada por la dependencia.',
                 'questions' => [
                     ['statement' => '¿A qué evento asististe?', 'type' => 'texto'],
                     ['statement' => '¿Cómo calificarías la organización general del evento?', 'type' => 'escala'],
@@ -173,7 +173,7 @@ class TemplateBankSeeder extends Seeder
             ],
             [
                 'name' => 'Consultas institucionales',
-                'description' => 'Recoge la opinión de ciudadanos o grupos de interés sobre una política, iniciativa o consulta pública impulsada por el Ministerio.',
+                'description' => 'Recoge la opinión de ciudadanos o grupos de interés sobre una política, iniciativa o consulta pública impulsada por la dependencia.',
                 'questions' => [
                     ['statement' => '¿Conocías la iniciativa/política antes de esta consulta?', 'type' => 'si_no'],
                     [
