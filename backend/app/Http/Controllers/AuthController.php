@@ -2,13 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
 use App\Models\User;
 use App\Models\SurveyUser;
-use Encrypt;
-use Hash;
-use Http;
-use Log;
 
 class AuthController extends Controller
 {
@@ -23,6 +18,24 @@ class AuthController extends Controller
     }
 
     /**
+     * Guard de autenticación JWT (tymon/jwt-auth).
+     *
+     * Los métodos factory(), setTTL() y refresh() existen en
+     * \Tymon\JWTAuth\JWTGuard, pero el helper auth() está tipado como
+     * \Illuminate\Contracts\Auth\Guard, por lo que el IDE no los resuelve.
+     * Esta anotación declara el tipo real.
+     *
+     * @return \Tymon\JWTAuth\JWTGuard
+     */
+    private function jwtGuard(): \Tymon\JWTAuth\JWTGuard
+    {
+        /** @var \Tymon\JWTAuth\JWTGuard $guard */
+        $guard = auth('api');
+
+        return $guard;
+    }
+
+    /**
      * Get a JWT via given credentials.
      *
      * @return \Illuminate\Http\JsonResponse
@@ -31,14 +44,17 @@ class AuthController extends Controller
     {
         $credentials = request(['email', 'password']);
 
-        if (!$token = auth('api')->attempt($credentials)) {
+        $guard = $this->jwtGuard();
+
+        if (!$token = $guard->attempt($credentials)) {
             return response()->json([
                 'message' => 'Credenciales no válidas',
                 'error' => 'Unauthorized'
             ], 401);
         }
 
-        $user = auth('api')->user();
+        /** @var \App\Models\User $user */
+        $user = $guard->user();
 
         return response()->json([
             'message' => 'Token generado correctamente.',
@@ -46,8 +62,8 @@ class AuthController extends Controller
                 'backend' => [
                     'access_token' => $token,
                     'token_type' => 'Bearer',
-                    'expires_in' => auth('api')->factory()->getTTL() * 60,
-                    'refresh_token' => auth('api')->setTTL(8600)->claims(['token_type' => 'refresh'])->refresh(),
+                    'expires_in' => $guard->factory()->getTTL() * 60,
+                    'refresh_token' => $guard->setTTL(8600)->claims(['token_type' => 'refresh'])->refresh(),
                 ],
                 'user' => $user->format(),
                 // Perfil e identidad dentro del módulo de encuestas — es lo
@@ -94,7 +110,7 @@ class AuthController extends Controller
     {
         $credentials = request(['email', 'password']);
 
-        if (!$token = auth('api')->attempt($credentials)) {
+        if (!$token = $this->jwtGuard()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
@@ -108,7 +124,8 @@ class AuthController extends Controller
      */
     public function me()
     {
-        $authUser = auth('api')->user();
+        /** @var \App\Models\User $authUser */
+        $authUser = $this->jwtGuard()->user();
 
         return response()->json([
             'status' => 'success',
@@ -125,7 +142,7 @@ class AuthController extends Controller
      */
     public function logout()
     {
-        auth('api')->logout();
+        $this->jwtGuard()->logout();
 
         return response()->json([
             'status' => 'success',
@@ -140,7 +157,7 @@ class AuthController extends Controller
      */
     public function refresh()
     {
-        return $this->respondWithToken(auth('api')->refresh());
+        return $this->respondWithToken($this->jwtGuard()->refresh());
     }
 
     /**
@@ -157,7 +174,7 @@ class AuthController extends Controller
             'message' => 'Token generado correctamente.',
             'access_token' => $token,
             'token_type' => 'Bearer',
-            'expires_in' => auth('api')->factory()->getTTL() * 60
+            'expires_in' => $this->jwtGuard()->factory()->getTTL() * 60
         ]);
     }
 }
